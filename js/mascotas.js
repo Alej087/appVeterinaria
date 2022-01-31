@@ -7,6 +7,7 @@ const dueno = document.getElementById("dueno");
 const indice = document.getElementById("indice");
 const form = document.getElementById("form");
 const botonGuardar = document.getElementById("btn-guardar")
+const botonNueva = document.getElementById("botonCrear")
 let mascotas = [
     {
         especie: "Gato",
@@ -28,12 +29,13 @@ function listarMascotas() {
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
-            <button type="button" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+            <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
             </div>
         </td>
     </tr>`).join("");
     listaMascotas.innerHTML = htmlMascotas;
     Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
+    Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarMascota(index));
 }
 
 function enviarDatos(evento){
@@ -83,6 +85,14 @@ function resetModal(){
     botonGuardar.innerHTML = "Crear";
 }
 
+function eliminarMascota(index){
+    return function cuandoClickEliminar(){
+        mascotas = mascotas.filter((mascota,indiceMascota)=>indiceMascota !== index);
+        listarMascotas();
+    }
+}
+
 listarMascotas();
 form.onsubmit = enviarDatos;
 botonGuardar.onclick = enviarDatos;
+botonNueva.onclick = resetModal;
