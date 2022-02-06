@@ -5,4 +5,9 @@ module.exports = {
         {especie: "Gato", nombre: "Mittens2", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
         {especie: "Gato", nombre: "Mittens3", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
     ],
+
+    veterinarios: [
+        {cargo: "Dr.", nombre: "Wilson", apellido: "Bernal"},
+        {cargo: "Dra.", nombre: "Lina", apellido: "Toro"}
+    ]
 };
