@@ -1,8 +1,9 @@
 const http = require('http');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
+const enrutador = require("./enrutador");
 
-let recursos = {
+global.recursos = {
     mascotas: [
         {especie: "Gato", nombre: "Mittens", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
         {especie: "Gato", nombre: "Mittens", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
@@ -86,29 +87,7 @@ const callBackDelServidor = (req,res) => {
     });
 };
 
-const enrutador = {
-    ruta: (data, callback) => {
-        callback(200, {mensaje: "Esta es /ruta"})
-    },
-    mascotas: {
-        get:  (data, callback) => {
-            if(typeof data.indice !== "undefined") {
-                if(recursos.mascotas[data.indice]) {
-                    return callback(200, recursos.mascotas[data.indice]);
-                }
-                return callback(404, {mensaje: `mascota con indice ${indice} no encontrada`});
-            }
-            callback(200, recursos.mascotas);
-        },
-        post: (data, callback) => {
-            recursos.mascotas.push(data.payload);
-            callback(201, data.payload);
-        },
-    },    
-    noEncontrado: (data, callback) => {
-        callback(404, {mensaje: "No encontrado"});
-    }
-}
+
 
 const server = http.createServer(callBackDelServidor);
 
