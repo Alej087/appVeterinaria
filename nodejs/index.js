@@ -44,6 +44,10 @@ const callBackDelServidor = (req,res) => {
     req.on("end", ()=>{
         buffer += decoder.end();
 
+        if(headers["content-type"] === "application/json"){
+            buffer = JSON.parse(buffer);
+        }
+
     // 3.5. ordenar la data del request
     const data = {
         ruta: rutaLimpia,
@@ -57,8 +61,8 @@ const callBackDelServidor = (req,res) => {
 
     // 3.6. elegir el manejador dependiendo de la ruta y asignarle la funcion que el enrutador tiene
     let handler;
-    if(rutaLimpia && enrutador[rutaLimpia]) {
-        handler = enrutador[rutaLimpia];
+    if(rutaLimpia && enrutador[rutaLimpia] && enrutador[rutaLimpia][metodo]) {
+        handler = enrutador[rutaLimpia][metodo];
     }else {
         handler = enrutador.noEncontrado;
     }
@@ -80,8 +84,14 @@ const enrutador = {
     ruta: (data, callback) => {
         callback(200, {mensaje: "Esta es /ruta"})
     },
-    mascotas: (data, callback) => {
-        callback(200, recursos.mascotas);
+    mascotas: {
+        get:  (data, callback) => {
+            callback(200, recursos.mascotas);
+        },
+        post: (data, callback) => {
+            recursos.mascotas.push(data.payload);
+            callback(201, data.payload);
+        },
     },    
     noEncontrado: (data, callback) => {
         callback(404, {mensaje: "No encontrado"});
