@@ -28,6 +28,10 @@ function listarDuenos() {
         <td>${dueno.tipoDocumento}</td>
         <td>${dueno.numeroDocumento}</td>
         <td>${dueno.nombre}</td>
+        <td>${dueno.apellido}</td>
+        <td>${dueno.numeroContacto}</td>
+        <td>${dueno.direccion}</td>
+        <td>${dueno.email}</td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
@@ -35,29 +39,33 @@ function listarDuenos() {
             </div>
         </td>
     </tr>`).join("");
-    listaEmpleados.innerHTML = htmlEmpleados;
+    listaDuenos.innerHTML = htmlDuenos;
     Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
-    Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarEmpleado(index));
+    Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarDueno(index));
 }
 
 function enviarDatos(evento){
     evento.preventDefault();
     const datos = {
-        cargo : cargo.value,
+        tipoDocumento : tipoDocumento.value,
+        numeroDocumento : numeroDocumento.value,
         nombre : nombre.value,
         apellido : apellido.value,
+        numeroContacto : numeroContacto.value,
+        direccion : direccion.value,
+        email : email.value,
     };
     const accion = botonGuardar.innerHTML;
     switch(accion){
         case "Editar" :
-            empleados[indice.value] = datos;
+            duenos[indice.value] = datos;
             break;
         default:
-            empleados.push(datos);
+            duenos.push(datos);
             break;    
     }
     
-    listarEmpleados();
+    listarDuenos();
     resetModal();
 }
 
@@ -65,30 +73,38 @@ function editar(index) {
     return function cuandoClick(){
         botonGuardar.innerHTML = "Editar";  
         $("#exampleModal").modal("toggle");
-        const empleado = empleados[index];
-        cargo.value = empleado.cargo;
-        nombre.value = empleado.nombre;
-        apellido.value = empleado.apellido;
+        const dueno = duenos[index];
+        tipoDocumento.value = dueno.tipoDocumento;
+        numeroDocumento.value = dueno.numeroDocumento;
+        nombre.value = dueno.nombre;
+        apellido.value = dueno.apellido;
+        numeroContacto.value = dueno.numeroContacto;
+        direccion.value = dueno.direccion;
+        email.value = dueno.email;
         indice.value = index;
     }
 }
 
 function resetModal(){
-    cargo.value = "";
+    tipoDocumento.value = "";
+    numeroDocumento.value = "";
     nombre.value = "";
     apellido.value = "";
+    numeroContacto.value = "";
+    direccion.value = "";
+    email.value = "";
     indice.value = "";
     botonGuardar.innerHTML = "Crear";
 }
 
-function eliminarEmpleado(index){
+function eliminarDueno(index){
     return function cuandoClickEliminar(){
-        empleados = empleados.filter((empleado,indiceEmpleado)=>indiceEmpleado !== index);
-        listarEmpleados();
+        duenos = duenos.filter((dueno,indiceDueno)=>indiceDueno !== index);
+        listarDuenos();
     }
 }
 
-listarEmpleados();
+listarDuenos();
 form.onsubmit = enviarDatos;
 botonGuardar.onclick = enviarDatos;
 botonNueva.onclick = resetModal;
