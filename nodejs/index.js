@@ -2,6 +2,15 @@ const http = require('http');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 
+let recursos = {
+    mascotas: [
+        {especie: "Gato", nombre: "Mittens", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
+        {especie: "Gato", nombre: "Mittens", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
+        {especie: "Gato", nombre: "Mittens", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
+        {especie: "Gato", nombre: "Mittens", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
+    ],
+};
+
 const callBackDelServidor = (req,res) => {
     // 1. obtener url desde el objeto request
     const urlActual = req.url;
@@ -44,6 +53,8 @@ const callBackDelServidor = (req,res) => {
         payload: buffer,
     };
 
+    console.log({data});
+
     // 3.6. elegir el manejador dependiendo de la ruta y asignarle la funcion que el enrutador tiene
     let handler;
     if(rutaLimpia && enrutador[rutaLimpia]) {
@@ -56,6 +67,7 @@ const callBackDelServidor = (req,res) => {
         if(typeof handler === "function") {
             handler(data, (statusCode = 200, mensaje) => {
                 const respuesta = JSON.stringify(mensaje);
+                res.setHeader("Content-Type","application/json");
                 res.writeHead(statusCode);
                 // linea donde realmente ya estamos respondiendo a la aplicacion cliente
                 res.end(respuesta);
@@ -68,9 +80,9 @@ const enrutador = {
     ruta: (data, callback) => {
         callback(200, {mensaje: "Esta es /ruta"})
     },
-    usuarios: (data, callback) => {
-        callback(200, [{nombre: "usuario 1"}, {nombre: "usuario 2"}])
-    },
+    mascotas: (data, callback) => {
+        callback(200, recursos.mascotas);
+    },    
     noEncontrado: (data, callback) => {
         callback(404, {mensaje: "No encontrado"});
     }
