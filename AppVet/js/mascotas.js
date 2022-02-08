@@ -19,6 +19,7 @@ let mascotas = [
 ];
 
 function listarMascotas() {
+    solicitarMascotas();
     const htmlMascotas = mascotas.map((mascota, index)=> `<tr>
         <th scope="row">${index}</th>
         <td>${mascota.especie}</td>
@@ -89,10 +90,21 @@ function eliminarMascota(index){
     return function cuandoClickEliminar(){
         mascotas = mascotas.filter((mascota,indiceMascota)=>indiceMascota !== index);
         listarMascotas();
-    }
+    };
 }
 
 listarMascotas();
+
+function solicitarMascotas() {
+    fetch("http://localhost:8000/mascotas").then((respuesta)=> {
+        if(respuesta.ok) {
+            return respuesta.json();
+        }
+    }).then(mascotasDelServer => {
+        console.log({mascotasDelServer})
+    });
+}
+
 form.onsubmit = enviarDatos;
 botonGuardar.onclick = enviarDatos;
 botonNueva.onclick = resetModal;
