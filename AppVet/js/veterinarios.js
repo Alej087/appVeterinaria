@@ -4,53 +4,74 @@ const nombre = document.getElementById("nombre");
 const apellido = document.getElementById("apellido");
 const indice = document.getElementById("indice");
 const form = document.getElementById("form");
-const botonGuardar = document.getElementById("btn-guardar")
-const botonNueva = document.getElementById("botonCrear")
-let empleados = [
-    {
-        cargo: "Dr.",
-        nombre: "Wilson",
-        apellido: "Bernal",
-    }
-];
+const botonGuardar = document.getElementById("btn-guardar");
+const botonNueva = document.getElementById("botonCrear");
+const url = "http://localhost:8000/veterinarios";
+let empleados = [];
 
-function listarEmpleados() {
-    const htmlEmpleados = empleados.map((empleado, index)=> `<tr>
-        <th scope="row">${index}</th>
-        <td>${empleado.cargo}</td>
-        <td>${empleado.nombre}</td>
-        <td>${empleado.apellido}</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
-            <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
-            </div>
-        </td>
-    </tr>`).join("");
-    listaEmpleados.innerHTML = htmlEmpleados;
-    Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
-    Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarEmpleado(index));
+async function listarEmpleados() {
+    try {
+        const respuesta = await fetch(url);
+    const empleadosDelServer = await respuesta.json();
+    if (Array.isArray(empleadosDelServer)) {
+        empleados = empleadosDelServer;
+    }
+    if (empleados.length > 0) {
+        const htmlEmpleados = empleados.map((empleado, index)=> `<tr>
+            <th scope="row">${index}</th>
+            <td>${empleado.cargo}</td>
+            <td>${empleado.nombre}</td>
+            <td>${empleado.apellido}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>`).join("");
+        listaEmpleados.innerHTML = htmlEmpleados;
+        Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
+        Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarEmpleado(index));
+        return;
+    }  
+    listaEmpleados.innerHTML = `<tr>
+        <td colspan="5" class="lista-vacia"> No hay empleados</td>
+        </tr>`;
+    } catch (error) {
+        $(".alert").show();
+    }
 }
 
-function enviarDatos(evento){
+async function enviarDatos(evento){
     evento.preventDefault();
-    const datos = {
-        cargo : cargo.value,
-        nombre : nombre.value,
-        apellido : apellido.value,
-    };
-    const accion = botonGuardar.innerHTML;
-    switch(accion){
-        case "Editar" :
-            empleados[indice.value] = datos;
-            break;
-        default:
-            empleados.push(datos);
-            break;    
-    }
-    
-    listarEmpleados();
-    resetModal();
+    try {
+        const datos = {
+            cargo : cargo.value,
+            nombre : nombre.value,
+            apellido : apellido.value,
+        };
+        const accion = botonGuardar.innerHTML;
+        let urlEnvio = url;
+        let method = "POST"
+        if(accion === "Editar") {
+            urlEnvio += `/${indice.value}`; 
+            method = "PUT";   
+        }
+        const respuesta = await fetch(urlEnvio, {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+            mode: "cors"
+        });
+        if(respuesta.ok) {
+            listarEmpleados();
+            resetModal();
+        }       
+    } catch (error) {
+        $(".alert").show();
+    }  
 }
 
 function editar(index) {
