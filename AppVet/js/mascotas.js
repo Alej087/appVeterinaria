@@ -42,7 +42,7 @@ async function listarMascotas() {
             <td colspan="5">No hay mascotas</td>
         </tr>`;
     } catch (error){
-        throw error;
+        $(".alert").show();
     }
 }
 
@@ -78,7 +78,7 @@ async function enviarDatos(evento){
         }
         
     } catch (error) {
-        throw error;
+        $(".alert").show();
     }
 }
 
@@ -117,7 +117,7 @@ function eliminarMascota(index){
                 listarMascotas();
             }       
         } catch (error) {
-            throw error;
+            $(".alert").show();
         }       
     };
 }
