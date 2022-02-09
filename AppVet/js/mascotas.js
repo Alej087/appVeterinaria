@@ -6,60 +6,74 @@ const raza = document.getElementById("raza");
 const dueno = document.getElementById("dueno");
 const indice = document.getElementById("indice");
 const form = document.getElementById("form");
-const botonGuardar = document.getElementById("btn-guardar")
-const botonNueva = document.getElementById("botonCrear")
-let mascotas = [
-    {
-        especie: "Gato",
-        nombre: "Mittens",
-        edad: "6 años",
-        raza: "Criollo",
-        dueno: "Alejandro González"
-    }
-];
+const botonGuardar = document.getElementById("btn-guardar");
+const botonNueva = document.getElementById("botonCrear");
+const url = "http://localhost:8000/mascotas";
+let mascotas = [];
 
-function listarMascotas() {
-    solicitarMascotas();
-    const htmlMascotas = mascotas.map((mascota, index)=> `<tr>
-        <th scope="row">${index}</th>
-        <td>${mascota.especie}</td>
-        <td>${mascota.nombre}</td>
-        <td>${mascota.edad}</td>
-        <td>${mascota.raza}</td>
-        <td>${mascota.dueno}</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
-            <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
-            </div>
-        </td>
-    </tr>`).join("");
-    listaMascotas.innerHTML = htmlMascotas;
-    Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
-    Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarMascota(index));
+async function listarMascotas() {
+    try{
+        const respuesta = await fetch(url);
+        const mascotasDelServer = await respuesta.json();
+        if(Array.isArray(mascotasDelServer) && mascotasDelServer.length > 0) {
+            mascotas = mascotasDelServer;
+        }
+        const htmlMascotas = mascotas.map((mascota, index)=> `<tr>
+            <th scope="row">${index}</th>
+            <td>${mascota.especie}</td>
+            <td>${mascota.nombre}</td>
+            <td>${mascota.edad}</td>
+            <td>${mascota.raza}</td>
+            <td>${mascota.dueno}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>`).join("");
+        listaMascotas.innerHTML = htmlMascotas;
+        Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
+        Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarMascota(index));
+    } catch (error){
+        throw error;
+    }
 }
 
-function enviarDatos(evento){
+async function enviarDatos(evento){
     evento.preventDefault();
-    const datos = {
-        especie : especie.value,
-        nombre : nombre.value,
-        edad : edad.value,
-        raza : raza.value,
-        dueno : dueno.value,
-    };
-    const accion = botonGuardar.innerHTML;
-    switch(accion){
-        case "Editar" :
-            mascotas[indice.value] = datos;
-            break;
-        default:
-            mascotas.push(datos);
-            break;    
+    try {
+        const datos = {
+            especie : especie.value,
+            nombre : nombre.value,
+            edad : edad.value,
+            raza : raza.value,
+            dueno : dueno.value,
+        };
+        let method = "POST";
+        let urlEnvio = url;
+        const accion = botonGuardar.innerHTML;
+        if(accion === "Editar"){
+                method = "PUT";
+                mascotas[indice.value] = datos;
+                urlEnvio = `${url}/${indice.value}`;   
+        }
+        
+        const respuesta = await fetch(urlEnvio, {
+            method,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos),
+        });
+        if(respuesta.ok) {
+            listarMascotas();
+            resetModal();
+        }
+        
+    } catch (error) {
+        throw error;
     }
-    
-    listarMascotas();
-    resetModal();
 }
 
 function editar(index) {
@@ -94,16 +108,6 @@ function eliminarMascota(index){
 }
 
 listarMascotas();
-
-function solicitarMascotas() {
-    fetch("http://localhost:8000/mascotas").then((respuesta)=> {
-        if(respuesta.ok) {
-            return respuesta.json();
-        }
-    }).then(mascotasDelServer => {
-        console.log({mascotasDelServer})
-    });
-}
 
 form.onsubmit = enviarDatos;
 botonGuardar.onclick = enviarDatos;
