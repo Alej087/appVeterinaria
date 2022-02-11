@@ -23,3 +23,7 @@
 .alert {
     display: none;
 }
+
+.lista-vacia {
+    text-align: center;
+}

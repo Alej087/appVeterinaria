@@ -8,65 +8,82 @@ const direccion = document.getElementById("direccion");
 const email = document.getElementById("email");
 const indice = document.getElementById("indice");
 const form = document.getElementById("form");
-const botonGuardar = document.getElementById("btn-guardar")
-const botonNueva = document.getElementById("botonCrear")
-let duenos = [
-    {
-        tipoDocumento : "C.C.",
-        numeroDocumento : 1128268161,
-        nombre : "Alejandro",
-        apellido : "González",
-        numeroContacto : 3012996400, 
-        direccion : "Cra 62 # 165 A 88 Torre 3 Apto 1203",
-        email : "alejo87.gonzalez@gmail.com",
-    }
-];
+const botonGuardar = document.getElementById("btn-guardar");
+const botonNueva = document.getElementById("botonCrear");
+const url = "http://localhost:8000/duenos";
+let duenos = [];
 
-function listarDuenos() {
-    const htmlDuenos = duenos.map((dueno, index)=> `<tr>
-        <th scope="row">${index}</th>
-        <td>${dueno.tipoDocumento}</td>
-        <td>${dueno.numeroDocumento}</td>
-        <td>${dueno.nombre}</td>
-        <td>${dueno.apellido}</td>
-        <td>${dueno.numeroContacto}</td>
-        <td>${dueno.direccion}</td>
-        <td>${dueno.email}</td>
-        <td>
-            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
-            <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
-            </div>
-        </td>
-    </tr>`).join("");
-    listaDuenos.innerHTML = htmlDuenos;
-    Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
-    Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarDueno(index));
+async function listarDuenos() {
+    try {
+        const respuesta = await fetch(url);
+        const duenosDelServer = await respuesta.json();
+        if(Array.isArray(duenosDelServer)) {
+            duenos = duenosDelServer;
+        }
+        if(duenos.length > 0) {
+                const htmlDuenos = duenos.map((dueno, index)=> `<tr>
+                <th scope="row">${index}</th>
+                <td>${dueno.tipoDocumento}</td>
+                <td>${dueno.numeroDocumento}</td>
+                <td>${dueno.nombre}</td>
+                <td>${dueno.apellido}</td>
+                <td>${dueno.numeroContacto}</td>
+                <td>${dueno.direccion}</td>
+                <td>${dueno.email}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-info editar")"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>`).join("");
+            listaDuenos.innerHTML = htmlDuenos;
+            Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
+            Array.from(document.getElementsByClassName("eliminar")).forEach((botonEliminar, index)=>botonEliminar.onclick=eliminarDueno(index));
+            return;
+        }
+        listaDuenos.innerHTML = `<tr>
+        <td colspan="9" class="lista-vacia">No hay dueños</td>
+        </tr>`;
+    } catch (error) {
+        $(".alert").show();
+    }    
 }
 
-function enviarDatos(evento){
+async function enviarDatos(evento){
     evento.preventDefault();
-    const datos = {
-        tipoDocumento : tipoDocumento.value,
-        numeroDocumento : numeroDocumento.value,
-        nombre : nombre.value,
-        apellido : apellido.value,
-        numeroContacto : numeroContacto.value,
-        direccion : direccion.value,
-        email : email.value,
-    };
-    const accion = botonGuardar.innerHTML;
-    switch(accion){
-        case "Editar" :
-            duenos[indice.value] = datos;
-            break;
-        default:
-            duenos.push(datos);
-            break;    
-    }
-    
-    listarDuenos();
-    resetModal();
+    try {
+        const datos = {
+            tipoDocumento : tipoDocumento.value,
+            numeroDocumento : numeroDocumento.value,
+            nombre : nombre.value,
+            apellido : apellido.value,
+            numeroContacto : numeroContacto.value,
+            direccion : direccion.value,
+            email : email.value,
+        };
+        const accion = botonGuardar.innerHTML;
+        let urlEnvio = url;
+        let method = "POST";
+        if(accion === "Editar"){
+            urlEnvio += `/${indice.value}`;
+            method = "PUT";
+        }
+        const respuesta = await fetch(urlEnvio, {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+            mode: "cors",
+        });
+        if(respuesta.ok) {
+            listarDuenos();
+            resetModal();
+        } 
+    } catch (error) {
+        $(".alert").show();
+    } 
 }
 
 function editar(index) {
@@ -98,9 +115,20 @@ function resetModal(){
 }
 
 function eliminarDueno(index){
-    return function cuandoClickEliminar(){
-        duenos = duenos.filter((dueno,indiceDueno)=>indiceDueno !== index);
-        listarDuenos();
+    const urlEnvio = `${url}/${index}`
+    return async function cuandoClickEliminar(){
+        try {
+            const respuesta = await fetch(urlEnvio, {
+                method: "DELETE",
+                mode: "cors",
+            });
+            if(respuesta.ok) {
+                listarDuenos();
+            }
+        } catch (error) {
+            console.log({error});
+            $(".alert").show();
+        }
     }
 }
 

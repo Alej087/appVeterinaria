@@ -39,7 +39,7 @@ async function listarMascotas() {
             return;
         }
         listaMascotas.innerHTML = `<tr>
-            <td colspan="5">No hay mascotas</td>
+            <td colspan="7" class="lista-vacia">No hay mascotas</td>
         </tr>`;
     } catch (error){
         $(".alert").show();

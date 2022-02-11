@@ -95,9 +95,20 @@ function resetModal(){
 }
 
 function eliminarEmpleado(index){
-    return function cuandoClickEliminar(){
-        empleados = empleados.filter((empleado,indiceEmpleado)=>indiceEmpleado !== index);
-        listarEmpleados();
+    const urlEnvio = `${url}/${index}`
+    return async function cuandoClickEliminar(){
+        try {
+            const respuesta = await fetch(urlEnvio, {
+                method: "DELETE",
+                mode: "cors",
+            });
+            if(respuesta.ok) {
+                listarEmpleados();
+            }
+        } catch (error) { 
+            console.log({error}); 
+            $(".alert").show();
+        }
     }
 }
 
