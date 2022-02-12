@@ -1,8 +1,13 @@
 const listaConsultas = document.getElementById("lista-consultas");
 const mascota = document.getElementById("mascota");
+const veterinario = document.getElementById("veterinario");
+const historiaClinica = document.getElementById("historia");
+const diagnostico = document.getElementById("diagnostico");
+const tratamiento = document.getElementById("tratamiento");
 const url = "http://localhost:8000"
 let mascotas = [];
 let consultas = [];
+let veterinarios = [];
 
 async function listarConsultas() {
     const entidad = "consultas";
@@ -59,3 +64,26 @@ async function listarMascotas() {
 }
 
 listarMascotas();
+
+async function listarVeterinarios() {
+    const entidad = "veterinarios";
+    try {
+        const respuesta = await fetch(`${url}/${entidad}`);
+        const veterinariosDelServer = await respuesta.json();
+        if(Array.isArray(veterinariosDelServer)) {
+            veterinarios = veterinariosDelServer;
+        }
+        if(respuesta.ok) {
+            veterinarios.forEach((_veterinario, indice)=> {
+                const optionActual = document.createElement("option");
+                optionActual.innerHTML = `${_veterinario.nombre} ${_veterinario.apellido}`;
+                optionActual.value = indice;
+                veterinario.appendChild(optionActual);
+            });
+        }    
+    } catch (error) {
+        $(".alert").show();
+    }
+}
+
+listarVeterinarios();
