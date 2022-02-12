@@ -4,7 +4,10 @@ const veterinario = document.getElementById("veterinario");
 const historiaClinica = document.getElementById("historia");
 const diagnostico = document.getElementById("diagnostico");
 const tratamiento = document.getElementById("tratamiento");
-const url = "http://localhost:8000"
+const botonGuardar = document.getElementById("btn-guardar");
+const indice = document.getElementById("indice");
+const url = "http://localhost:8000";
+
 let mascotas = [];
 let consultas = [];
 let veterinarios = [];
@@ -34,13 +37,12 @@ async function listarConsultas() {
                 </td>
             </tr>`).join("");
             listaConsultas.innerHTML = htmlConsultas;
+            Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
         }    
     } catch (error) {
         $(".alert").show();
     }
 }
-
-listarConsultas();
 
 async function listarMascotas() {
     const entidad = "mascotas";
@@ -63,8 +65,6 @@ async function listarMascotas() {
     }
 }
 
-listarMascotas();
-
 async function listarVeterinarios() {
     const entidad = "veterinarios";
     try {
@@ -86,4 +86,20 @@ async function listarVeterinarios() {
     }
 }
 
+function editar(index) {
+    return function cuandoClick(){
+        botonGuardar.innerHTML = "Editar";  
+        $("#exampleModal").modal("toggle");
+        const consulta = consultas[index];
+        mascota.value = consulta.mascota.id;
+        veterinario.value = consulta.veterinario.id;
+        historia.value = consulta.historia;
+        diagnostico.value = consulta.diagnostico;
+        tratamiento.value = consulta.tratamiento;
+        indice.value = index;
+    };
+}
+
+listarConsultas();
+listarMascotas();
 listarVeterinarios();
