@@ -17,6 +17,6 @@ module.exports = {
     ],
 
     consultas:[
-        {fechaCreacion: new Date(), fechaModificacion: new Date(), mascota: 0, veterinario: 0, historia: "", diagnostico: "", tratamiento: ""},
+        {fechaCreacion: new Date(), fechaModificacion: new Date(), mascota: 0, veterinario: 0, historiaClinica: "", diagnostico: "", tratamiento: ""},
     ],
 };
