@@ -5,6 +5,7 @@ const historiaClinica = document.getElementById("historia");
 const diagnostico = document.getElementById("diagnostico");
 const tratamiento = document.getElementById("tratamiento");
 const botonGuardar = document.getElementById("btn-guardar");
+const formulario = document.getElementById("formulario");
 const indice = document.getElementById("indice");
 const url = "http://localhost:8000";
 
@@ -40,7 +41,7 @@ async function listarConsultas() {
             Array.from(document.getElementsByClassName("editar")).forEach((botonEditar, index)=>botonEditar.onclick=editar(index));
         }    
     } catch (error) {
-        $(".alert").show();
+        $(".alert-danger").show();
     }
 }
 
@@ -61,7 +62,7 @@ async function listarMascotas() {
             });
         }    
     } catch (error) {
-        $(".alert").show();
+        $(".alert-danger").show();
     }
 }
 
@@ -82,7 +83,7 @@ async function listarVeterinarios() {
             });
         }    
     } catch (error) {
-        $(".alert").show();
+        $(".alert-danger").show();
     }
 }
 
@@ -107,7 +108,7 @@ async function enviarDatos(evento){
         const datos = {
             mascota: mascota.value,
             veterinario: veterinario.value,
-            historiaClinica: historiaClinica.value,
+            historia: historiaClinica.value,
             diagnostico: diagnostico.value,
             tratamiento: tratamiento.value,
         };
@@ -131,11 +132,12 @@ async function enviarDatos(evento){
                 listarConsultas();
                 resetModal();
             }
+            formulario.classList.add("was-validated");
             return;
         }
-        alert("Formulario Incmpleto");
+        $(".alert-warning").show();
     } catch (error) {
-        $(".alert").show();
+        $(".alert-danger").show();
     } 
 }
 
@@ -152,10 +154,17 @@ function resetModal(){
 
 function validar(datos) {
     if(typeof datos !== "object") return false;
+    let respuesta = true;
     for( let llave in datos) {
-        if(datos[llave].length === 0) return false;
+        if(datos[llave].length === 0) {
+            document.getElementById(llave).classList.add("is-invalid");
+            respuesta = false;
+        } else {
+            document.getElementById(llave).classList.remove("is-invalid");
+            document.getElementById(llave).classList.add("is-valid");
+        }
     }
-    return true;
+    return respuesta;
 }
 
 

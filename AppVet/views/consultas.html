@@ -46,8 +46,15 @@
         </div>
     </nav>
     <div class="actions-menu">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Nueva Consulta
-        </button>
+        <div class="actions-menu-content">
+            <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Nueva Consulta
+            </button>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                <strong>Holy guacamole!</strong> Algo salió mal, por favor vuelve a intentarlo.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
     </div>
     <div class="container">
         <table class="table table-hover">
@@ -73,20 +80,25 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Nueva Mascota</h5>
+                        <div class="alert alert-warning alert-dismissible" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                            <strong>Ops...!</strong> Faltan datos por diligenciar!.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form class="needs-validation" id="formulario">
                             <input type="hidden" id="indice" />
                             <div class="form-row">
                                 <div class="col">
                                     <select class="form-control" id="mascota">
-                                        <option selected>Seleccione Mascota</option>
+                                        <option value="">Seleccione Mascota</option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <select class="form-control" id="veterinario">
-                                        <option selected>Seleccione Veterinario</option>
+                                        <option value="">Seleccione Veterinario</option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -94,10 +106,10 @@
                                 </div>
                                 <div class="col">
                                     <select class="form-control" id="diagnostico">
-                                        <option selected>Diagnostico</option>
-                                        <option selected>Diagnostico1</option>
-                                        <option selected>Diagnostico2</option>
-                                        <option selected>Diagnostico3</option>
+                                        <option value="">Diagnostico</option>
+                                        <option>Diagnostico1</option>
+                                        <option>Diagnostico2</option>
+                                        <option>Diagnostico3</option>
                                     </select>
                                 </div>
                                 <div class="col">
