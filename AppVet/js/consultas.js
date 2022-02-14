@@ -7,7 +7,7 @@ const tratamiento = document.getElementById("tratamiento");
 const botonGuardar = document.getElementById("btn-guardar");
 const formulario = document.getElementById("formulario");
 const indice = document.getElementById("indice");
-const url = "http://localhost:8000";
+const url = "http://https://veterinaria-backend-liart-one.vercel.app";
 
 let mascotas = [];
 let consultas = [];

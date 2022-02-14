@@ -8,7 +8,7 @@ const indice = document.getElementById("indice");
 const form = document.getElementById("form");
 const botonGuardar = document.getElementById("btn-guardar");
 const botonNueva = document.getElementById("botonCrear");
-const url = "http://localhost:8000/mascotas";
+const url = "http://https://veterinaria-backend-liart-one.vercel.app/mascotas";
 let mascotas = [];
 
 async function listarMascotas() {
