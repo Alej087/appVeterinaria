@@ -132,7 +132,6 @@ async function enviarDatos(evento){
                 listarConsultas();
                 resetModal();
             }
-            formulario.classList.add("was-validated");
             return;
         }
         $(".alert-warning").show();
@@ -142,13 +141,13 @@ async function enviarDatos(evento){
 }
 
 function resetModal(){
-    mascota.value = "";
-    veterinario.value = "";
-    historiaClinica.value = "";
-    diagnostico.value = "";
-    tratamiento.value = "";
-    indice.value = "";
     botonGuardar.innerHTML = "Crear";
+    [indice, mascota, veterinario, historiaClinica, diagnostico,tratamiento].forEach((inputActual) => {
+        inputActual.value = "";
+        inputActual.classList.remove("is-valid");
+        inputActual.classList.remove("is-invalid");
+    });
+    $(".alert-warning").hide();
     $("#exampleModal").modal("toggle");
 }
 
@@ -164,6 +163,7 @@ function validar(datos) {
             document.getElementById(llave).classList.add("is-valid");
         }
     }
+    if(respuesta === true) $(".alert-warning").hide();
     return respuesta;
 }
 
