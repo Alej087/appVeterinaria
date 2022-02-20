@@ -18,105 +18,106 @@
     <title>Veterinaria App</title>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">AppVet</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/index.html">Mascotas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/veterinarios.html">Veterinarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/consultas.html">Consultas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/duenos.html">Dueños</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button type="button" class="btn btn-primary">Buscar</button>              </form>
-            </div>
-        </div>
-    </nav>
-    <div class="actions-menu">
-        <h1>Mascotas</h1>
-        <div class="actions-menu-content">
-            <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Nueva
-            </button>
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <strong>Holy guacamole!</strong> Algo salió mal, por favor vuelve a intentarlo.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
     <div class="container">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Especie</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Edad</th>
-                    <th scope="col">Raza</th>
-                    <th scope="col">Dueño</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="lista-mascotas">
-                
-            </tbody>
-        </table>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Nueva Mascota</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form">
-                            <input type="hidden" id="indice">
-                            <div class="form-row">
-                                <div class="col">
-                                    <select id="especie" class="form-select" aria-label="Default select example">
-                                        <option selected>Especie</option>
-                                        <option>Perro</option>
-                                        <option>Gato</option>
-                                        <option>Otro</option>
-                                    </select>
+        <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">AppVet</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/index.html">Mascotas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/veterinarios.html">Veterinarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/consultas.html">Consultas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/views/duenos.html">Dueños</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button type="button" class="btn btn-primary">Buscar</button>              </form>
+                </div>
+            </div>
+        </nav>
+        <div class="actions-menu">
+            <h1>Mascotas</h1>
+            <div class="actions-menu-content">
+                <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Nueva
+                </button>
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlinkHref="#exclamation-triangle-fill"/></svg>
+                    <strong>Holy guacamole!</strong> Algo salió mal, por favor vuelve a intentarlo.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Especie</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Edad</th>
+                        <th scope="col">Raza</th>
+                        <th scope="col">Dueño</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="lista-mascotas">
+                    
+                </tbody>
+            </table>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Nueva Mascota</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form">
+                                <input type="hidden" id="indice">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <select id="especie" class="form-select" aria-label="Default select example">
+                                            <option selected>Especie</option>
+                                            <option>Perro</option>
+                                            <option>Gato</option>
+                                            <option>Otro</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="raza" name="raza" class="form-control" placeholder="Raza">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="edad" name="edad" class="form-control" placeholder="Edad">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="dueno" name="dueno" class="form-control" placeholder="Dueño">
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
-                                </div>
-                                <div class="col">
-                                    <input type="text" id="raza" name="raza" class="form-control" placeholder="Raza">
-                                </div>
-                                <div class="col">
-                                    <input type="text" id="edad" name="edad" class="form-control" placeholder="Edad">
-                                </div>
-                                <div class="col">
-                                    <input type="text" id="dueno" name="dueno" class="form-control" placeholder="Dueño">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" id="btn-guardar" class="btn btn-primary" data-bs-dismiss="modal">Crear</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" id="btn-guardar" class="btn btn-primary" data-bs-dismiss="modal">Crear</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Optional JavaScript; choose one of the two! -->
     <script src="./js/mascotas.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
