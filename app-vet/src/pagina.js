@@ -1,8 +1,8 @@
 import React from "react";
-import Nav from "./componentes/nav";
-import ActionsMenu from "./componentes/actionsMenu";
+import Nav from "./componentes/Nav";
+import ActionsMenu from "./componentes/ActionsMenu";
 import Tabla from "./componentes/tabla";
-import Modal from "./componentes/modal";
+//import Modal from "./componentes/modal";
 
 function Mascotas () {
     return (<div className="container">
@@ -10,7 +10,7 @@ function Mascotas () {
         <ActionsMenu />
         <div className="container">
             <Tabla />
-            <Modal />
+            
         </div>
     </div>
     )

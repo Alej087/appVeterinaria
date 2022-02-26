@@ -1,4 +1,5 @@
 import React from "react";
+import "./actionsMenu.css"
 
 function ActionsMenu () {
     return (
