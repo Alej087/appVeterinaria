@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Encabezado from "./encabezado";
 import Fila from "./filas";
+import "./tabla.css"
 
 function Tabla () {
     const [mascotas, setMascotas] = useState([

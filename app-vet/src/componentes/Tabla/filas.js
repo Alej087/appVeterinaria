@@ -1,5 +1,5 @@
 import React from "react";
-import Encabezado from "./encabezado";
+import BotonAccion from "../BotonAccion";
 
 function Fila({mascota, index}) {
     return (
@@ -12,8 +12,8 @@ function Fila({mascota, index}) {
                 <td>{mascota.dueno}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" class="btn btn-info editar"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger eliminar"><i class="fas fa-trash"></i></button>
+                        <BotonAccion tipo="editar" />
+                        <BotonAccion tipo="eliminar" />
                     </div>
                 </td>
         </tr>

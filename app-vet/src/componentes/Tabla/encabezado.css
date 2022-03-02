@@ -1,0 +1,13 @@
+.thead-dark th {
+    color: #fff;
+    background-color: rgb(13,110,253);
+    border-color: #1f405e;
+}
+
+.table thead th {
+    padding: .75rem;
+    vertical-align: bottom;
+    border-top:  1px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+    text-transform: capitalize;
+}

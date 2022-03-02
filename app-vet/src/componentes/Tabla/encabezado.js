@@ -1,9 +1,10 @@
 import React from "react";
+import "./encabezado.css"
 
 function Encabezado(props) {
     if(props.columnas.length === 0) return false;
     return (
-        <thead>
+        <thead className="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     {props.columnas.map((columna) => (
