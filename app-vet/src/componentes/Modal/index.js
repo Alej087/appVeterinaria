@@ -1,26 +1,17 @@
 import React from "react";
+import ModalHeader from "./modalHeader";
+import Select from "../Select";
 
 function Modal () {
     return (
         <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Nueva Mascota</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                    <ModalHeader />
                     <div className="modal-body">
                         <form id="form">
-                            <input type="hidden" id="indice"/>
                             <div className="form-row">
-                                <div className="col">
-                                    <select id="especie" className="form-select" aria-label="Default select example">
-                                        <option selected>Especie</option>
-                                        <option>Perro</option>
-                                        <option>Gato</option>
-                                        <option>Otro</option>
-                                    </select>
-                                </div>
+                                <Select />
                                 <div className="col">
                                     <input type="text" id="nombre" name="nombre" className="form-control" placeholder="Nombre"/>
                                 </div>
