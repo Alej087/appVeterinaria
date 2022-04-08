@@ -13,7 +13,11 @@ function Modal () {
                         <div className="modal-body">
                             <form id="form">
                                 <div className="form-row">
-                                    <Select />
+                                    <Select options = {[
+                                                        {valor: "Perro", etiqueta: "Perro"},
+                                                        {valor: "Gato", etiqueta: "Gato"},
+                                                        {valor: "Otro", etiqueta: "Otro"},
+                                                        ]} nombreCampo = "Especie"/>
                                     <div className="col">
                                         <input type="text" id="nombre" name="nombre" className="form-control" placeholder="Nombre"/>
                                     </div>
