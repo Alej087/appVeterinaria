@@ -23,5 +23,5 @@ select.form-select {
     -moz-appearance: none;
     appearance: none;
     margin-bottom: 10px;
-    width: 150%;
+    width: 100%;
 }
