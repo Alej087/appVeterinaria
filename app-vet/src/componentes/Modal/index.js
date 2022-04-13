@@ -1,5 +1,6 @@
 import React from "react";
 import ModalHeader from "./modalHeader";
+import ModalFooter from "./modalFooter";
 import Input from "../Input";
 import Select from "../Select";
 import "./modal.css";
@@ -52,23 +53,7 @@ function Modal() {
                                 </div>
                             </form>
                         </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                            >
-                                Cerrar
-                            </button>
-                            <button
-                                type="button"
-                                id="btn-guardar"
-                                className="btn btn-primary"
-                                data-bs-dismiss="modal"
-                            >
-                                Crear
-                            </button>
-                        </div>
+                        <ModalFooter />
                     </div>
                 </div>
             </div>
