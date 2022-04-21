@@ -1,25 +1,24 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Encabezado from "./encabezado";
 import Fila from "./filas";
-import "./tabla.css"
+import "./tabla.css";
 
-function Tabla () {
-    const [mascotas, setMascotas] = useState([
-        {especie: "Gato", nombre: "Mittens0", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
-        {especie: "Gato", nombre: "Mittens0", edad: "6 años", raza: "Criollo", dueno: "Alejandro González"},
-    ]);
-    const columnas = mascotas.length > 0 ? Object.keys(mascotas[0]) : [];
+function Tabla({ entidades = [] }) {
+    const columnas = entidades.length > 0 ? Object.keys(entidades[0]) : [];
     return (
         <table className="table table-hover">
-            <Encabezado columnas={columnas}/>
+            <Encabezado columnas={columnas} />
             <tbody id="lista-mascotas">
-                    {" "}
-                    {mascotas.map((mascota, index)=> (
-                        <Fila mascota={mascota} index={index} />
-                    ))}
+                {entidades.map((entidad, index) => (
+                    <Fila
+                        key={`fila-${index}`}
+                        index={index}
+                        entidad={entidad}
+                    />
+                ))}
             </tbody>
         </table>
-    )
+    );
 }
 
 export default Tabla;
